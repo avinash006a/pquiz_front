@@ -79,7 +79,7 @@ const Home = () => {
               Object.assign(e.target.style, styles.buttonHover)
             }
             onMouseOut={(e) => Object.assign(e.target.style, styles.button)}
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/login")}
           >
             Sign Up
           </button>
