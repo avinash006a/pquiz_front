@@ -80,12 +80,26 @@ const UserDashboard = () => {
                         </div>
                     </div>
                 </div>
-
-                <Link to="/quiz" style={styles.startButton}>
+            </div>
+            
+            <div style={styles.buttonContainer}>
+                <Link 
+                    to="/quiz"
+                    style={styles.startButton}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-3px)';
+                        e.currentTarget.style.boxShadow = '0 0 30px #ff2770, 0 0 60px #ff2770';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 39, 112, 0.5)';
+                    }}
+                >
                     Start Test
-                    <span style={styles.buttonIcon}>→</span>
+                    <span style={{ fontSize: '24px' }}>→</span>
                 </Link>
             </div>
+            
             <div style={glowingOrbs}></div>
         </div>
     );
@@ -194,6 +208,25 @@ const styles = {
         fontSize: '24px',
         filter: 'drop-shadow(0 0 5px #ff2770)',
     },
+    buttonContainer: {
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10,
+        width: 'auto',
+        textAlign: 'center',
+        marginTop: '30px',
+        paddingBottom: '20px',
+        '@media (max-width: 768px)': {
+            bottom: '15px',
+            paddingBottom: '15px',
+        },
+        '@media (max-width: 480px)': {
+            bottom: '10px',
+            paddingBottom: '10px',
+        },
+    },
     startButton: {
         display: 'flex',
         justifyContent: 'center',
@@ -206,34 +239,21 @@ const styles = {
         textDecoration: 'none',
         fontSize: '18px',
         fontWeight: '600',
-        transition: 'all 0.3s ease',
-        marginTop: '25px',
         position: 'relative',
         overflow: 'hidden',
         border: 'none',
         boxShadow: '0 0 20px rgba(255, 39, 112, 0.5)',
-        ':hover': {
-            transform: 'translateY(-3px)',
-            boxShadow: `0 0 30px #ff2770,
-                       0 0 60px #ff2770`,
+        transition: 'all 0.3s ease',
+        cursor: 'pointer',
+        whiteSpace: 'nowrap',
+        '@media (max-width: 768px)': {
+            padding: '12px 30px',
+            fontSize: '16px',
         },
-        ':before': {
-            content: '""',
-            position: 'absolute',
-            top: '0',
-            left: '-100%',
-            width: '100%',
-            height: '100%',
-            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
-            transition: '0.5s',
+        '@media (max-width: 480px)': {
+            padding: '10px 25px',
+            fontSize: '14px',
         },
-        ':hover:before': {
-            left: '100%',
-        },
-    },
-    buttonIcon: {
-        fontSize: '24px',
-        transition: 'transform 0.3s ease',
     },
 };
 
@@ -267,6 +287,35 @@ const glowingOrbs = {
         opacity: '0.15',
     },
 };
+
+const mediaQueries = `
+    @media (max-width: 768px) {
+        .buttonContainer {
+            bottom: 15px;
+            padding-bottom: 15px;
+        }
+        .startButton {
+            padding: 12px 30px;
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .buttonContainer {
+            bottom: 10px;
+            padding-bottom: 10px;
+        }
+        .startButton {
+            padding: 10px 25px;
+            font-size: 14px;
+        }
+    }
+`;
+
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = mediaQueries;
+document.head.appendChild(styleSheet);
 
 export default UserDashboard;
  

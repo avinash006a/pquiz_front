@@ -66,9 +66,36 @@ const Dashboard = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>📊 Admin Dashboard</h2>
+      <style>{animations}</style>
+      
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '10%',
+        width: '300px',
+        height: '300px',
+        background: '#45f3ff',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        opacity: '0.15',
+        animation: 'floatingOrb 8s infinite ease-in-out',
+      }}></div>
+      <div style={{
+        position: 'absolute',
+        bottom: '10%',
+        right: '20%',
+        width: '400px',
+        height: '400px',
+        background: '#ff2770',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        opacity: '0.15',
+        animation: 'floatingOrb 8s infinite ease-in-out reverse',
+      }}></div>
 
-      <div style={styles.section}>
+      <h2 style={styles.header}>📊 Admin Dashboard</h2>
+      
+      <div style={styles.section} className="dashboard-section">
         <h3 style={styles.sectionHeader}>👥 User Details</h3>
         <table style={styles.table}>
           <thead>
@@ -128,7 +155,7 @@ const Dashboard = () => {
                   <tr key={score._id} style={styles.tableRow}>
                     <td style={styles.tableCell}>{index + 1}</td>
                     <td style={styles.tableCell}>
-                      {user ? user.name : "Unknown User"}
+                      {user ? score.name : "Unknown User"}
                     </td>
                     <td style={styles.tableCell}>{score.setNumber}</td>
                     <td style={styles.tableCell}>{score.totalScore}</td>
@@ -167,101 +194,114 @@ const Dashboard = () => {
         </table>
       </div>
 
-      <button style={styles.homeButton} onClick={() => navigate("/")}>
+      <button style={styles.homeButton} className="home-button" onClick={() => navigate("/")}>
         Go Home
       </button>
     </div>
   );
 };
 
-// Internal CSS styles
 const styles = {
   container: {
-    padding: "20px",
-    fontFamily: "Arial, sans-serif",
-    backgroundColor: "#f4f7f6",
+    padding: "30px",
+    fontFamily: "'Poppins', sans-serif",
+    backgroundColor: "#25252b",
     minHeight: "100vh",
+    color: "#ffffff",
+    position: "relative",
+    overflow: "hidden",
   },
   header: {
     textAlign: "center",
-    color: "#333",
-    marginBottom: "30px",
-    fontSize: "2rem",
+    color: "#45f3ff",
+    marginBottom: "40px",
+    fontSize: "2.5rem",
     fontWeight: "bold",
-    animation: "fadeIn 1s ease-in-out",
+    textShadow: "0 0 10px #45f3ff",
+    letterSpacing: "2px",
   },
   section: {
-    backgroundColor: "#fff",
-    borderRadius: "10px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    padding: "20px",
-    marginBottom: "20px",
-    transition: "transform 0.3s ease-in-out",
+    backgroundColor: "rgba(69, 243, 255, 0.05)",
+    borderRadius: "20px",
+    boxShadow: "0 0 20px rgba(69, 243, 255, 0.2)",
+    padding: "30px",
+    marginBottom: "30px",
+    border: "1px solid rgba(69, 243, 255, 0.2)",
+    backdropFilter: "blur(10px)",
     animation: "slideIn 0.5s ease-in-out",
   },
   sectionHeader: {
-    color: "#555",
-    marginBottom: "15px",
-    fontSize: "1.5rem",
+    color: "#ff2770",
+    marginBottom: "25px",
+    fontSize: "1.8rem",
     fontWeight: "bold",
+    textShadow: "0 0 10px #ff2770",
   },
   table: {
     width: "100%",
-    borderCollapse: "collapse",
+    borderCollapse: "separate",
+    borderSpacing: "0 8px",
     marginBottom: "20px",
   },
   tableHeader: {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    padding: "12px",
+    backgroundColor: "rgba(255, 39, 112, 0.1)",
+    color: "#ff2770",
+    padding: "15px",
     textAlign: "left",
     fontWeight: "bold",
+    borderBottom: "2px solid #ff2770",
+    textShadow: "0 0 5px #ff2770",
   },
   tableRow: {
-    borderBottom: "1px solid #ddd",
-    transition: "background-color 0.3s ease-in-out",
+    transition: "all 0.3s ease",
+    backgroundColor: "rgba(69, 243, 255, 0.05)",
   },
   tableCell: {
-    padding: "12px",
+    padding: "15px",
     textAlign: "left",
-    fontWeight: "bold",
+    color: "#ffffff",
+    borderBottom: "1px solid rgba(69, 243, 255, 0.2)",
   },
   scoreDetail: {
     margin: "4px 0",
+    color: "#45f3ff",
   },
   deleteButton: {
-    backgroundColor: "#ff4d4d",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    padding: "8px 12px",
+    backgroundColor: "rgba(255, 39, 112, 0.2)",
+    color: "#ff2770",
+    border: "1px solid #ff2770",
+    borderRadius: "30px",
+    padding: "8px 16px",
     cursor: "pointer",
     fontSize: "14px",
-    transition: "background-color 0.3s ease-in-out",
+    transition: "all 0.3s ease",
+    textShadow: "0 0 5px #ff2770",
   },
   homeButton: {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    padding: "10px 20px",
+    backgroundColor: "rgba(69, 243, 255, 0.1)",
+    color: "#45f3ff",
+    border: "1px solid #45f3ff",
+    borderRadius: "30px",
+    padding: "12px 30px",
     cursor: "pointer",
     fontSize: "16px",
     display: "block",
-    margin: "20px auto",
-    transition: "background-color 0.3s ease-in-out",
+    margin: "30px auto",
+    transition: "all 0.3s ease",
+    textShadow: "0 0 5px #45f3ff",
+    letterSpacing: "1px",
   },
-  // Removed hover effects
 };
 
-// CSS Animations & Hover Effects
 const animations = `
   @keyframes fadeIn {
     from {
       opacity: 0;
+      filter: blur(10px);
     }
     to {
       opacity: 1;
+      filter: blur(0);
     }
   }
 
@@ -276,28 +316,40 @@ const animations = `
     }
   }
 
-  /* Hover effects */
-  tr:hover {
-    background-color: #f1f1f1;
+  @keyframes glowingBorder {
+    0% { border-color: rgba(69, 243, 255, 0.2); }
+    50% { border-color: rgba(69, 243, 255, 0.8); }
+    100% { border-color: rgba(69, 243, 255, 0.2); }
   }
 
-  button:hover {
-    opacity: 0.8;
+  .dashboard-section {
+    animation: glowingBorder 2s infinite;
+  }
+
+  tr:hover {
+    background-color: rgba(69, 243, 255, 0.1) !important;
+    transform: translateX(10px);
+    box-shadow: 0 0 20px rgba(69, 243, 255, 0.2);
   }
 
   .delete-button:hover {
-    background-color: #cc0000 !important;
+    background-color: rgba(255, 39, 112, 0.4) !important;
+    box-shadow: 0 0 15px rgba(255, 39, 112, 0.4);
+    transform: translateY(-2px);
   }
 
   .home-button:hover {
-    background-color: #005bb5 !important;
+    background-color: rgba(69, 243, 255, 0.2) !important;
+    box-shadow: 0 0 20px rgba(69, 243, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* Add glowing orbs animation */
+  @keyframes floatingOrb {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -30px); }
+    100% { transform: translate(0, 0); }
   }
 `;
-
-// Add animations and hover effects to the document
-const styleSheet = document.createElement("style");
-styleSheet.type = "text/css";
-styleSheet.innerText = animations;
-document.head.appendChild(styleSheet);
 
 export default Dashboard;

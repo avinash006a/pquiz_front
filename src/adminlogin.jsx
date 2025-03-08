@@ -39,126 +39,194 @@ function Admin() {
     }
   };
 
+  const styles = {
+    container: {
+      backgroundColor: "#25252b",
+      height: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      position: "relative",
+      overflow: "hidden",
+    },
+    closeButton: {
+      position: "absolute",
+      top: "20px",
+      right: "20px",
+      background: "none",
+      border: "none",
+      color: "#45f3ff",
+      fontSize: "28px",
+      cursor: "pointer",
+      textShadow: "0 0 10px #45f3ff",
+      transition: "all 0.3s ease",
+      zIndex: 10,
+    },
+    form: {
+      backgroundColor: "rgba(69, 243, 255, 0.05)",
+      padding: "40px",
+      borderRadius: "20px",
+      boxShadow: "0 0 30px rgba(69, 243, 255, 0.2)",
+      width: "100%",
+      maxWidth: "400px",
+      color: "white",
+      border: "1px solid rgba(69, 243, 255, 0.3)",
+      position: "relative",
+      backdropFilter: "blur(10px)",
+      animation: "formFloat 3s ease-in-out infinite",
+    },
+    heading: {
+      textAlign: "center",
+      marginBottom: "30px",
+      color: "#45f3ff",
+      fontSize: "2.2em",
+      textShadow: "0 0 10px #45f3ff",
+      letterSpacing: "2px",
+      fontWeight: "600",
+    },
+    inputGroup: {
+      marginBottom: "25px",
+      position: "relative",
+    },
+    label: {
+      display: "block",
+      marginBottom: "10px",
+      fontSize: "16px",
+      color: "#ffffff",
+      textShadow: "0 0 5px rgba(69, 243, 255, 0.5)",
+    },
+    input: {
+      width: "100%",
+      padding: "12px",
+      border: "1px solid rgba(69, 243, 255, 0.3)",
+      borderRadius: "30px",
+      outline: "none",
+      backgroundColor: "rgba(69, 243, 255, 0.1)",
+      color: "white",
+      fontSize: "16px",
+      transition: "all 0.3s ease",
+    },
+    error: {
+      color: "#ff2770",
+      textAlign: "center",
+      marginBottom: "15px",
+      textShadow: "0 0 5px #ff2770",
+    },
+    submitButton: {
+      width: "100%",
+      padding: "14px",
+      border: "none",
+      borderRadius: "30px",
+      backgroundColor: "#ff2770",
+      color: "white",
+      fontSize: "16px",
+      fontWeight: "bold",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+      textShadow: "0 0 5px rgba(255, 255, 255, 0.5)",
+      boxShadow: "0 0 20px rgba(255, 39, 112, 0.3)",
+    },
+  };
+
   return (
-    <div
-      style={{
-        backgroundColor: "#003366",  // Blue background
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-      }}
-    >
+    <div style={styles.container}>
+      <style>
+        {`
+          @keyframes formFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+
+          @keyframes glowingBorder {
+            0%, 100% { border-color: rgba(69, 243, 255, 0.3); }
+            50% { border-color: rgba(69, 243, 255, 0.8); }
+          }
+
+          .cyber-input:focus {
+            border-color: #45f3ff;
+            box-shadow: 0 0 20px rgba(69, 243, 255, 0.3);
+          }
+
+          .cyber-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 39, 112, 0.5);
+          }
+
+          .close-button:hover {
+            transform: rotate(90deg);
+            color: #ff2770;
+            text-shadow: 0 0 10px #ff2770;
+          }
+        `}
+      </style>
+
+      {/* Background Orbs */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '10%',
+        width: '300px',
+        height: '300px',
+        background: '#45f3ff',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        opacity: '0.15',
+        animation: 'formFloat 8s infinite ease-in-out',
+      }}></div>
+      <div style={{
+        position: 'absolute',
+        bottom: '10%',
+        right: '20%',
+        width: '400px',
+        height: '400px',
+        background: '#ff2770',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        opacity: '0.15',
+        animation: 'formFloat 8s infinite ease-in-out reverse',
+      }}></div>
+
       <button
         onClick={() => navigate(-1)}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          background: "none",
-          border: "none",
-          color: "#f1f1f1",  // Lighter text color
-          fontSize: "24px",
-          cursor: "pointer",
-        }}
+        style={styles.closeButton}
+        className="close-button"
       >
-        &times;
+        ×
       </button>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          backgroundColor: "#006699",  // Lighter blue for form
-          padding: "40px",
-          borderRadius: "10px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)",
-          width: "100%",
-          maxWidth: "400px",
-          color: "white",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            marginBottom: "20px",
-            color: "#d2b48c",  // Beige/gold color for the heading
-          }}
-        >
-          Admin Login
-        </h2>
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontSize: "14px",
-              color: "#f1f1f1",  // Lighter text color for labels
-            }}
-          >
-            Username:
-          </label>
+
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <h2 style={styles.heading}>Admin Login</h2>
+        
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Username:</label>
           <input
             type="text"
             required
             value={username}
             onChange={handleUsernameChange}
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "none",
-              borderRadius: "5px",
-              outline: "none",
-              backgroundColor: "#004d66",  // Darker blue for inputs
-              color: "white",
-              fontSize: "14px",
-            }}
+            style={styles.input}
+            className="cyber-input"
           />
         </div>
-        <div style={{ marginBottom: "20px" }}>
-          <label
-            style={{
-              display: "block",
-              marginBottom: "8px",
-              fontSize: "14px",
-              color: "#f1f1f1",
-            }}
-          >
-            Password:
-          </label>
+
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Password:</label>
           <input
             type="password"
             required
             value={password}
             onChange={handlePasswordChange}
-            style={{
-              width: "100%",
-              padding: "10px",
-              border: "none",
-              borderRadius: "5px",
-              outline: "none",
-              backgroundColor: "#004d66",
-              color: "white",
-              fontSize: "14px",
-            }}
+            style={styles.input}
+            className="cyber-input"
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {error && <p style={styles.error}>{error}</p>}
+
         <button
           type="submit"
-          style={{
-            width: "100%",
-            padding: "12px",
-            border: "none",
-            borderRadius: "5px",
-            backgroundColor: "#3399ff",  // Blue button color
-            color: "white",
-            fontSize: "16px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#66b3ff")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#3399ff")}
+          style={styles.submitButton}
+          className="cyber-button"
         >
           Login
         </button>
