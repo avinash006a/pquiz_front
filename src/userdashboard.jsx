@@ -18,7 +18,7 @@ const UserDashboard = () => {
         }
 
         // Fetch user details
-        axios.get(`http://192.168.71.4:3002/api/users/${userId}`)
+        axios.get(`http://192.168.70.4:3002/api/users/${userId}`)
             .then(response => {
                 setName(response.data.name);
                 setUsername(response.data.username);
@@ -28,7 +28,7 @@ const UserDashboard = () => {
             });
 
         // Fetch user score
-        axios.get(`http://192.168.71.4:3002/api/scores/${userId}`)
+        axios.get(`http://192.168.70.4:3002/api/scores/${userId}`)
             .then(response => {
                 setScore(response.data.totalScore);
                 setAttemptNumber(response.data.attemptNumber || 1);
@@ -44,12 +44,49 @@ const UserDashboard = () => {
         <div style={styles.container}>
             <div style={styles.card}>
                 <h1 style={styles.title}>User Dashboard</h1>
-                <p style={styles.info}><strong>Name:</strong> {name}</p>
-                <p style={styles.info}><strong>Username:</strong> {username}</p>
-                <p style={styles.info}><strong>Score:</strong> {score}</p>
-                <p style={styles.info}><strong>Attempt Number:</strong> {attemptNumber}</p>
-                <Link to="/quiz" style={styles.button}>Start Quiz</Link>
+                <div style={styles.userInfo}>
+                    <p style={styles.info}><strong>Name:</strong> {name}</p>
+                    <p style={styles.info}><strong>Username:</strong> {username}</p>
+                    <p style={styles.info}><strong>Score:</strong> {score}</p>
+                    <p style={styles.info}><strong>Attempt Number:</strong> {attemptNumber}</p>
+                </div>
+
+                <div style={styles.instructionsCard}>
+                    <h2 style={styles.instructionsTitle}>Quiz Instructions</h2>
+                    <div style={styles.instructionsList}>
+                        <div style={styles.instructionItem}>
+                            <span style={styles.icon}>🎯</span>
+                            <p>Total Questions: <strong>20</strong></p>
+                        </div>
+                        <div style={styles.instructionItem}>
+                            <span style={styles.icon}>⏱️</span>
+                            <p>Time Allotted: <strong>30 minutes</strong></p>
+                        </div>
+                        <div style={styles.instructionItem}>
+                            <span style={styles.icon}>🎯</span>
+                            <p>Marks per Question: <strong>1 mark</strong></p>
+                        </div>
+                        <div style={styles.instructionItem}>
+                            <span style={styles.icon}>❌</span>
+                            <p>No negative marking</p>
+                        </div>
+                        <div style={styles.warningBox}>
+                            <span style={styles.warningIcon}>⚠️</span>
+                            <p>This is a FREE online test. Beware of scammers who ask for money!</p>
+                        </div>
+                        <div style={styles.warningBox}>
+                            <span style={styles.warningIcon}>⚡</span>
+                            <p>DO NOT refresh the page during the test!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <Link to="/quiz" style={styles.startButton}>
+                    Start Test
+                    <span style={styles.buttonIcon}>→</span>
+                </Link>
             </div>
+            <div style={glowingOrbs}></div>
         </div>
     );
 };
@@ -59,39 +96,175 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#ffffff',
+        minHeight: '100vh',
+        backgroundColor: '#25252b',
         padding: '20px',
+        position: 'relative',
+        overflow: 'hidden',
     },
     card: {
-        backgroundColor: '#e8f5e9',
+        backgroundColor: 'rgba(37, 37, 43, 0.9)',
         padding: '30px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-        textAlign: 'center',
-        maxWidth: '400px',
+        borderRadius: '20px',
+        boxShadow: `0 0 20px #45f3ff,
+                    0 0 40px #45f3ff,
+                    inset 0 0 60px rgba(69, 243, 255, 0.2)`,
+        maxWidth: '600px',
         width: '100%',
+        border: '1px solid rgba(69, 243, 255, 0.3)',
+        position: 'relative',
+        backdropFilter: 'blur(10px)',
     },
     title: {
-        color: '#4caf50',
-        marginBottom: '20px',
+        color: '#45f3ff',
+        fontSize: '2.8em',
+        marginBottom: '30px',
+        textAlign: 'center',
+        fontWeight: '700',
+        textShadow: '0 0 10px #45f3ff',
+        letterSpacing: '2px',
+    },
+    userInfo: {
+        backgroundColor: 'rgba(255, 39, 112, 0.1)',
+        padding: '25px',
+        borderRadius: '15px',
+        marginBottom: '30px',
+        border: '1px solid rgba(255, 39, 112, 0.3)',
+        boxShadow: '0 0 15px rgba(255, 39, 112, 0.2)',
     },
     info: {
-        fontSize: '18px',
-        color: '#4caf50',
-        margin: '10px 0',
-    },
-    button: {
-        display: 'inline-block',
-        marginTop: '20px',
-        padding: '10px 20px',
-        backgroundColor: '#4caf50',
-        color: '#fff',
-        textDecoration: 'none',
-        borderRadius: '5px',
         fontSize: '16px',
-        fontWeight: 'bold',
-        transition: 'background 0.3s ease',
+        color: '#ffffff',
+        margin: '12px 0',
+        textShadow: '0 0 5px rgba(69, 243, 255, 0.5)',
+    },
+    instructionsCard: {
+        backgroundColor: 'rgba(69, 243, 255, 0.1)',
+        padding: '25px',
+        borderRadius: '15px',
+        marginBottom: '30px',
+        border: '1px solid rgba(69, 243, 255, 0.3)',
+        boxShadow: '0 0 15px rgba(69, 243, 255, 0.2)',
+    },
+    instructionsTitle: {
+        color: '#ff2770',
+        fontSize: '1.8em',
+        marginBottom: '25px',
+        textAlign: 'center',
+        textShadow: '0 0 10px #ff2770',
+        letterSpacing: '1px',
+    },
+    instructionsList: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
+    },
+    instructionItem: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px',
+        fontSize: '16px',
+        color: '#ffffff',
+        padding: '10px',
+        borderRadius: '8px',
+        backgroundColor: 'rgba(69, 243, 255, 0.05)',
+        transition: 'all 0.3s ease',
+        ':hover': {
+            backgroundColor: 'rgba(69, 243, 255, 0.1)',
+            transform: 'translateX(5px)',
+        },
+    },
+    icon: {
+        fontSize: '24px',
+        filter: 'drop-shadow(0 0 5px #45f3ff)',
+    },
+    warningBox: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px',
+        backgroundColor: 'rgba(255, 39, 112, 0.1)',
+        padding: '15px',
+        borderRadius: '12px',
+        marginTop: '15px',
+        border: '1px solid rgba(255, 39, 112, 0.3)',
+        color: '#ffffff',
+        boxShadow: '0 0 15px rgba(255, 39, 112, 0.2)',
+    },
+    warningIcon: {
+        fontSize: '24px',
+        filter: 'drop-shadow(0 0 5px #ff2770)',
+    },
+    startButton: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '10px',
+        backgroundColor: '#ff2770',
+        color: '#ffffff',
+        padding: '15px 40px',
+        borderRadius: '30px',
+        textDecoration: 'none',
+        fontSize: '18px',
+        fontWeight: '600',
+        transition: 'all 0.3s ease',
+        marginTop: '25px',
+        position: 'relative',
+        overflow: 'hidden',
+        border: 'none',
+        boxShadow: '0 0 20px rgba(255, 39, 112, 0.5)',
+        ':hover': {
+            transform: 'translateY(-3px)',
+            boxShadow: `0 0 30px #ff2770,
+                       0 0 60px #ff2770`,
+        },
+        ':before': {
+            content: '""',
+            position: 'absolute',
+            top: '0',
+            left: '-100%',
+            width: '100%',
+            height: '100%',
+            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
+            transition: '0.5s',
+        },
+        ':hover:before': {
+            left: '100%',
+        },
+    },
+    buttonIcon: {
+        fontSize: '24px',
+        transition: 'transform 0.3s ease',
+    },
+};
+
+const glowingOrbs = {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    ':before': {
+        content: '""',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        width: '600px',
+        height: '600px',
+        background: '#45f3ff',
+        borderRadius: '50%',
+        transform: 'translate(-50%, -50%)',
+        filter: 'blur(100px)',
+        opacity: '0.15',
+    },
+    ':after': {
+        content: '""',
+        position: 'absolute',
+        top: '30%',
+        right: '20%',
+        width: '400px',
+        height: '400px',
+        background: '#ff2770',
+        borderRadius: '50%',
+        filter: 'blur(100px)',
+        opacity: '0.15',
     },
 };
 
