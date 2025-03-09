@@ -9,36 +9,32 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUsers();
-    fetchScores();
+    // Fetch users and scores in parallel
+    const fetchData = async () => {
+      try {
+        const [usersResponse, scoresResponse] = await Promise.all([
+          axios.get(`${API_URL}/users`),
+          axios.get(`${API_URL}/scores`),
+        ]);
+
+        if (usersResponse.data) {
+          setUsers(usersResponse.data);
+        } else {
+          console.log("No users found.");
+        }
+
+        if (scoresResponse.data) {
+          setScores(scoresResponse.data);
+        } else {
+          console.log("No scores found.");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/users`);
-      if (response.data) {
-        setUsers(response.data);
-      } else {
-        console.log("No users found.");
-      }
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
-  // Fetch scores from backend
-  const fetchScores = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/scores`);
-      if (response.data) {
-        setScores(response.data);
-      } else {
-        console.log("No scores found.");
-      }
-    } catch (error) {
-      console.error("Error fetching scores:", error);
-    }
-  };
 
   // Delete user by ID
   const deleteUser = async (userId) => {
@@ -150,12 +146,23 @@ const Dashboard = () => {
           <tbody>
             {scores.length > 0 ? (
               scores.map((score, index) => {
-                const user = users.find((u) => u._id === score.userId);
+                // Extract the actual ID from the userId object if it exists
+                const scoreUserId = score.userId?._id || score.userId;
+                console.log("Score userId:", scoreUserId);
+                
+                const user = users.find((u) => {
+                  const userId = String(u._id);
+                  console.log("Comparing:", scoreUserId, "with", userId);
+                  return String(scoreUserId) === userId;
+                });
+
                 return (
                   <tr key={score._id} style={styles.tableRow}>
                     <td style={styles.tableCell}>{index + 1}</td>
                     <td style={styles.tableCell}>
-                      {user ? score.name : "Unknown User"}
+                      <span style={user ? styles.userName : styles.unknownUser}>
+                        {user ? user.name : "Loading..."}
+                      </span>
                     </td>
                     <td style={styles.tableCell}>{score.setNumber}</td>
                     <td style={styles.tableCell}>{score.totalScore}</td>
@@ -290,6 +297,12 @@ const styles = {
     transition: "all 0.3s ease",
     textShadow: "0 0 5px #45f3ff",
     letterSpacing: "1px",
+  },
+  userName: {
+    color: "#45f3ff",
+  },
+  unknownUser: {
+    color: "#ff2770",
   },
 };
 
